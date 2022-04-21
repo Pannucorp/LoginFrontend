@@ -33,6 +33,10 @@ export default class SignUp extends Component {
         console.log('Updated State',this.state);
         axios
         .post(baseURL, {
+            headers: {
+              'Content-Type' : 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
             username: this.state.userName,
             email:this.state.emailAddress,
             password: this.state.password

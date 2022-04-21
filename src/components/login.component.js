@@ -9,32 +9,50 @@ export default class Login extends Component {
             userName: '',
             password: ''
         };
-    
+
         this.handleUNChange = this.handleUNChange.bind(this);
         this.handlePChange = this.handlePChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-      }
-      handleUNChange(event) {
-        this.setState({userName: event.target.value});
-      }
-      handlePChange(event) {
-        this.setState({password: event.target.value});
-      }
-    
-      handleSubmit(event) {
+    }
+    handleUNChange(event) {
+        this.setState({ userName: event.target.value });
+    }
+    handlePChange(event) {
+        this.setState({ password: event.target.value });
+    }
+
+    handleSubmit(event) {
         // alert('A name was submitted: ' + this.state.value);
-        console.log('Updated State',this.state);
-        axios
-        .post(baseURL, {
-            username: this.state.userName,
-            password: this.state.password
-        })
-        .then((response) => {
-        //   setPost(response.data);
-            console.log(response); 
-        });
+        console.log('Updated State', this.state);
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json' },
+            body: {
+                username: this.state.userName,
+                password: this.state.password
+            }
+        };
+        fetch(baseURL, requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
+
+        // axios
+        //     .post(baseURL, {
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded',
+        //             'Accept': 'application/json',
+        //             "Access-Control-Allow-Origin": "*",
+        //             'Access-Control-Allow-Credentials': 'true'
+        //         },
+        //         username: this.state.userName,
+        //         password: this.state.password
+        //     })
+        //     .then((response) => {
+        //         //   setPost(response.data);
+        //         console.log(response);
+        //     });
         event.preventDefault();
-      }
+    }
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
@@ -42,12 +60,12 @@ export default class Login extends Component {
 
                 <div className="form-group">
                     <label>User name</label>
-                    <input type="text" className="form-control" placeholder="Enter name"   value={this.state.userName} onChange={this.handleUNChange}/>
+                    <input type="text" className="form-control" placeholder="Enter name" value={this.state.userName} onChange={this.handleUNChange} />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password"  value={this.state.password} onChange={this.handlePChange}/>
+                    <input type="password" className="form-control" placeholder="Enter password" value={this.state.password} onChange={this.handlePChange} />
                 </div>
 
                 <div className="form-group">
